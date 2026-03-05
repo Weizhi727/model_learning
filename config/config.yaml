@@ -1,0 +1,117 @@
+# GroundingDINO 工業標注系統設定檔
+# 複製為 config_local.yaml 並依實際環境修改
+
+# =============================================================================
+# 模型設定
+# =============================================================================
+model:
+  # 使用模式：auto（自動選擇）/ hf（HuggingFace）/ local（本地安裝）
+  mode: "auto"
+
+  # HuggingFace 模型（mode: hf 或 auto 時使用）
+  # 可選：
+  #   "IDEA-Research/grounding-dino-tiny"  → 較快，適合測試
+  #   "IDEA-Research/grounding-dino-base"  → 較準，適合正式使用
+  hf_model_id: "IDEA-Research/grounding-dino-tiny"
+
+  # 本地模型路徑（mode: local 或 auto 時使用）
+  # local_config: "GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py"
+  # local_checkpoint: "weights/groundingdino_swint_ogc.pth"
+  local_config: null
+  local_checkpoint: null
+
+  # 推論裝置：null（自動偵測）/ "cuda" / "cpu"
+  device: null
+
+# =============================================================================
+# 推論參數
+# =============================================================================
+inference:
+  # BBox 信心閾值（0~1）
+  # 較低 → 召回率高但誤報多（適合需要人工審查的場景）
+  # 較高 → 精確率高但可能漏報（適合高信心自動標注）
+  # 零樣本推薦：0.30~0.40
+  # Fine-tune 後推薦：0.40~0.55
+  box_threshold: 0.35
+
+  # 文字匹配閾值（0~1）
+  # 通常設為 box_threshold 的 70~80%
+  text_threshold: 0.25
+
+  # NMS IoU 閾值（去除重疊框）
+  # 較低 → 更激進地去除重疊（適合物件不重疊的場景）
+  # 較高 → 保留更多重疊框（適合物件可能堆疊的場景）
+  nms_threshold: 0.5
+
+# =============================================================================
+# 標注類別
+# =============================================================================
+# 填入你的工站物件類別名稱（英文效果最好，因為模型以英文訓練）
+# 若類別為中文，建議對照翻譯，例如：
+#   螺絲 → screw
+#   手套 → glove
+#   安全帽 → hard hat
+#   PCB板 → PCB board
+#   瑕疵 → defect
+#   裂紋 → crack
+
+categories:
+  - "screw"
+  - "bolt"
+  - "glove"
+  # - "hard hat"        # 安全帽
+  # - "PCB board"       # PCB板
+  # - "defect"          # 瑕疵（通用）
+  # - "crack"           # 裂紋
+  # - "scratch"         # 刮痕
+  # - "missing part"    # 缺件
+  # 在此繼續添加你的類別...
+
+# =============================================================================
+# 資料路徑（選填，可在命令列覆蓋）
+# =============================================================================
+paths:
+  # 舊資料（已有 LabelMe 標注，供 fine-tune 用）
+  # labeled_data_dir: "/path/to/last_year/labelme_jsons"
+  # labeled_image_dir: "/path/to/last_year/images"
+
+  # 新資料（待自動標注）
+  # new_image_dir: "/path/to/this_year/images"
+
+  # 輸出目錄
+  # output_annotation_dir: "/path/to/auto_annotations"
+
+  # 權重目錄
+  # weights_dir: "weights"
+
+# =============================================================================
+# 工站設定（多工站場景）
+# =============================================================================
+# 若有多個工站，可針對各工站設定不同的類別和閾值
+# 使用方式：在命令列指定 --categories 覆蓋全局類別設定
+#
+# stations:
+#   station_A:
+#     categories: ["screw", "bolt", "washer"]
+#     box_threshold: 0.40
+#   station_B:
+#     categories: ["glove", "hard hat"]
+#     box_threshold: 0.35
+#   station_C:
+#     categories: ["PCB board", "defect", "crack"]
+#     box_threshold: 0.30    # 瑕疵通常較難偵測，建議降低閾值
+
+# =============================================================================
+# Fine-tune 設定
+# =============================================================================
+finetune:
+  # Open-GroundingDino repo 路徑
+  open_gdino_dir: "Open-GroundingDino"
+
+  # 訓練超參數（依 GPU 記憶體調整 batch_size）
+  # GPU 8GB  → batch_size: 2
+  # GPU 16GB → batch_size: 4
+  # GPU 24GB → batch_size: 8
+  batch_size: 2
+  epochs: 12
+  gpu_count: 1

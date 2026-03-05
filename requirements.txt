@@ -1,0 +1,30 @@
+# GroundingDINO 工業標注系統依賴
+
+# === 核心 ===
+numpy>=1.21.0
+Pillow>=9.0.0
+PyYAML>=6.0
+tqdm>=4.64.0
+
+# === GroundingDINO（HuggingFace 版本）===
+# 安裝後即可使用，無需本地 clone
+transformers>=4.38.0
+torch>=1.11.0
+torchvision>=0.12.0
+
+# === 資料分析 ===
+# matplotlib>=3.5.0   # 如需圖表視覺化（可選）
+# pandas>=1.4.0       # 如需表格統計（可選）
+
+# === 評估工具 ===
+# pycocotools>=2.0.6  # 如需使用 COCO 標準評估（可選）
+#   安裝方式：pip install pycocotools
+#   macOS 可能需要：pip install pycocotools-macos
+
+# === 本地 GroundingDINO 安裝（可選，性能更好）===
+# 1. git clone https://github.com/IDEA-Research/GroundingDINO.git
+# 2. cd GroundingDINO && pip install -e .
+# 需要 CUDA 環境和 C++ 編譯工具
+
+# === Open-GroundingDino Fine-tune（可選）===
+# 按照 scripts/04_finetune_setup.py 生成的 INSTRUCTIONS.md 安裝

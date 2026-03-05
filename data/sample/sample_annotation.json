@@ -1,0 +1,43 @@
+{
+  "version": "5.2.1",
+  "flags": {},
+  "shapes": [
+    {
+      "label": "screw",
+      "points": [
+        [120.5, 80.3],
+        [165.2, 135.7]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {},
+      "description": "confidence:0.8523"
+    },
+    {
+      "label": "bolt",
+      "points": [
+        [240.0, 150.0],
+        [290.5, 210.3]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {},
+      "description": "confidence:0.7241"
+    },
+    {
+      "label": "screw",
+      "points": [
+        [350.2, 90.1],
+        [395.8, 148.4]
+      ],
+      "group_id": null,
+      "shape_type": "rectangle",
+      "flags": {},
+      "description": "confidence:0.6134"
+    }
+  ],
+  "imagePath": "station_A_001.jpg",
+  "imageData": null,
+  "imageHeight": 480,
+  "imageWidth": 640
+}
