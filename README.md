@@ -167,6 +167,13 @@ python scripts/05_evaluate.py \
 
 ---
 
+## 延伸閱讀
+
+- [GroundingDINO vs YOLO：差異與分工](docs/grounding_dino_vs_yolo.md)
+- [完整使用流程說明](docs/workflow.md)
+
+---
+
 ## 授權
 
 本工具為輔助腳本集合，依賴項目授權：
